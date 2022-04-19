@@ -1,0 +1,410 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Bibligraphy in Latex - Mighty Maniacs</title>
+<meta name="description" content="">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Mighty Maniacs">
+<meta property="og:title" content="Bibligraphy in Latex">
+<meta property="og:url" content="http://localhost:4000/jekyll/update/2021/12/13/Bib.html">
+
+
+  <meta property="og:description" content="">
+
+
+
+  <meta property="og:image" content="http://localhost:4000/assets/images/code.jpg">
+
+
+
+
+
+  <meta property="article:published_time" content="2021-12-13T14:59:14+05:30">
+
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/jekyll/update/2021/12/13/Bib.html">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Mighty Maniacs",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Mighty Maniacs Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--posts">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/"><img src="/assets/images/logo.png" alt="Mighty Maniacs"></a>
+        
+        <a class="site-title" href="/">
+          Mighty Maniacs
+          <span class="site-subtitle">Make it Work</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/mj/">Madhur Jain</a>
+            </li><li class="masthead__menu-item">
+              <a href="/pk/">Parth Khandenath</a>
+            </li><li class="masthead__menu-item">
+              <a href="/ab/">Arjit Bhamu</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+  
+
+
+
+
+
+
+
+<div class="page__hero--overlay"
+  style=" background-image: linear-gradient(rgba(255, 40, 80, 0.5), rgba(255, 40, 80, 0.5)), url('/assets/images/code.jpg');"
+>
+  
+    <div class="wrapper">
+      <h1 id="page-title" class="page__title" itemprop="headline">
+        
+          Bibligraphy in Latex
+
+        
+      </h1>
+      
+        <p class="page__lead">
+</p>
+      
+      
+
+
+      
+      
+    </div>
+  
+  
+</div>
+
+
+
+
+
+<div id="main" role="main">
+  
+
+
+  <div class="archive">
+    
+    <h1 id="question">Question:</h1>
+<ul>
+  <li>Download at least 10 bibliography from distinct authors and distinct conferences.</li>
+  <li>Write a shell script to merge all files into a single file pub.bib.</li>
+  <li>Now write a shell/awk script to generate LATEX article that would cite all 10 entries in pub.bib in the main LATEX file So the awk script should extract only the keys and use then in the \cite command inside the source .tex file.</li>
+  <li>While generating the LATEX file, the script should pick one of the bibliography styles randomly from a list and a generate differently styled bibliography every time it is run.
+    <h2 id="solution">Solution</h2>
+  </li>
+</ul>
+
+<p>Here is the bash script:</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">{
+</span><span class="gp">#</span><span class="o">!</span>/bin/basih
+<span class="gp">touch pub.bib    #</span><span class="w"> </span>pub,bib file <span class="k">for </span>merge all files
+<span class="go">touch main.tex
+</span><span class="gp">echo -n "" &gt;</span><span class="w"> </span>main.tex   <span class="c"># create maint.tex file</span>
+<span class="go">rm main.aux
+rm main.bbl
+</span><span class="gp">rm main.blg     #</span>remove all file crete during run the script
+<span class="go">rm main.log
+rm main.pdf
+rm main.synctex.gz
+</span><span class="gp">cat 1999.bib CummingsLZ22.bib MonchABIFZH21.bib abs-2104-01231.bib Gold-Veerkamp21.bib Perez-DiezPLSI21.bib AlsaeediW21.bib GalliPZVVGOHM21.bib AlsaeediW21.bib BakharevEGKMPST22.bib LiuW21.bib SaboeSSMKCA21.bib &gt;</span><span class="w"> </span>pub.bib  <span class="c"># merging all files</span>
+<span class="gp">grep -h "@" pub.bib | awk -F'[{ ,]' '{print $</span>2 <span class="o">}</span><span class="s1">' &gt; cite.txt   # awk all cite keys in cite.txt file
+</span><span class="gp">echo "\\documentclass{article}" &gt;</span><span class="s1">&gt; main.tex
+</span><span class="gp">echo "\\begin{document}" &gt;</span><span class="s1">&gt; main.tex
+</span><span class="gp">echo "\\title{2}" &gt;</span><span class="s1">&gt; main.tex
+</span><span class="gp">echo "\\author{Khandenath Parth Shivdatta, Madhur Jain, Arjit Bhamu}" &gt;</span><span class="s1">&gt; main.tex
+</span><span class="gp">echo "\maketitle" &gt;</span><span class="s1">&gt; main.tex
+</span><span class="go">touch cd.txt
+a=0
+</span><span class="gp">while [ $</span>a <span class="nt">-lt</span> 12 <span class="o">]</span>              <span class="c"># creating tex file for bibligraphy</span>
+<span class="go">do
+</span><span class="gp">   k=$</span><span class="o">(</span><span class="nb">grep</span> <span class="nt">-m1</span> <span class="s2">""</span> cite.txt<span class="o">)</span>
+<span class="gp">   echo "Random citation \cite{$</span>k<span class="o">}</span> embeddeed <span class="k">in </span>text.<span class="s2">" &gt;&gt; main.tex
+</span><span class="gp">   awk 'NR&gt;</span><span class="s2">1' cite.txt &gt; cd.txt
+</span><span class="gp">   cat cd.txt &gt;</span><span class="w"> </span><span class="s2">cite.txt
+</span><span class="gp">   a=`expr $</span><span class="s2">a + 1</span><span class="sb">`</span>
+<span class="go">done
+</span><span class="gp">n=$</span><span class="o">(</span><span class="nb">grep</span> <span class="nt">-c</span> ^ tem.txt<span class="o">)</span>
+<span class="gp">if [ $</span>n <span class="o">==</span> 0 <span class="o">]</span>
+<span class="go">then
+</span><span class="gp">cat styles.txt &gt;</span><span class="w"> </span>tem.txt
+<span class="go">else
+   echo "okay fine "
+fi
+</span><span class="gp">q=$</span><span class="o">(</span><span class="nb">shuf</span> <span class="nt">-n</span> 1 tem.txt<span class="o">)</span>             <span class="c"># random style pick through this command</span>
+<span class="gp">sed '/$</span>q/d<span class="s1">' tem.txt &gt; tem2.txt
+</span><span class="gp">cat tem2.txt &gt;</span><span class="w"> </span><span class="s1">tem.txt
+</span><span class="gp">echo "\\newpage" &gt;</span><span class="s1">&gt; main.tex
+</span><span class="gp">echo "\\bibliography{pub.bib}" &gt;</span><span class="s1">&gt; main.tex
+</span><span class="gp">echo "\\bibliographystyle{$</span><span class="s1">q}" &gt;&gt; main.tex
+</span><span class="gp">echo "\\end{document}" &gt;</span><span class="s1">&gt; main.tex
+</span><span class="go">latex main.tex
+bibtex main
+latex main.tex
+</span><span class="gp">latex main.tex     #</span><span class="w"> </span>compile the code <span class="k">in </span>latex and show pdf
+<span class="go">pdflatex main.tex
+zathura main.pdf
+}
+</span></code></pre></div></div>
+
+<p><img src="/assets/images/bib.png" alt="image" /></p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>In this script first we merge all files in a pub.bib file then after we awk the cite key from all files through grep -h “@” pub.bib</td>
+      <td>awk -F’[{ ,]’ ‘{print $2 }’ &gt; cite.txt. Then after we grep random style from a file styles.txt . When we run the code show bibliography with different style</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>At last we make a pdf of Latex tex file and show it.</p>
+
+
+<ul class="taxonomy__index">
+  
+  
+    <li>
+      <a href="#2021">
+        <strong>2021</strong> <span class="taxonomy__count">3</span>
+      </a>
+    </li>
+  
+</ul>
+
+
+
+
+  <section id="2021" class="taxonomy__section">
+    <h2 class="archive__subtitle">2021</h2>
+    <div class="entries-list">
+      
+        
+
+
+
+<div class="list__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/jekyll/update/2021/12/13/animation.html" rel="permalink">Emedding animated GIFs in pdf using LaTeX
+</a>
+      
+    </h2>
+    
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+</p>
+  </article>
+</div>
+
+      
+        
+
+
+
+<div class="list__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/jekyll/update/2021/12/13/Low-b.html" rel="permalink">Low-Battery Warning
+</a>
+      
+    </h2>
+    
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+</p>
+  </article>
+</div>
+
+      
+        
+
+
+
+<div class="list__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/jekyll/update/2021/12/13/Bib.html" rel="permalink">Bibligraphy in Latex
+</a>
+      
+    </h2>
+    
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+</p>
+  </article>
+</div>
+
+      
+    </div>
+    <a href="#page-title" class="back-to-top">Back to top &uarr;</a>
+  </section>
+
+
+  </div>
+</div>
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2021 Mighty Maniacs. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,76 @@
+---
+layout: posts
+title:  "Bibligraphy in Latex"
+date:   2021-12-13 14:59:14 +0530
+categories: jekyll update
+excerpt: " "
+header:
+  overlay_image: /assets/images/code.jpg
+  overlay_filter: rgba(255, 40, 80, 0.5)
+---
+# Question:
+- Download at least 10 bibliography from distinct authors and distinct conferences.
+- Write a shell script to merge all files into a single file pub.bib.
+- Now write a shell/awk script to generate LATEX article that would cite all 10 entries in pub.bib in the main LATEX file So the awk script should extract only the keys and use then in the \cite command inside the source .tex file.
+- While generating the LATEX file, the script should pick one of the bibliography styles randomly from a list and a generate differently styled bibliography every time it is run.
+## Solution
+
+Here is the bash script:
+~~~console
+{
+#!/bin/basih
+touch pub.bib    # pub,bib file for merge all files
+touch main.tex
+echo -n "" > main.tex   # create maint.tex file
+rm main.aux
+rm main.bbl
+rm main.blg     #remove all file crete during run the script
+rm main.log
+rm main.pdf
+rm main.synctex.gz
+cat 1999.bib CummingsLZ22.bib MonchABIFZH21.bib abs-2104-01231.bib Gold-Veerkamp21.bib Perez-DiezPLSI21.bib AlsaeediW21.bib GalliPZVVGOHM21.bib AlsaeediW21.bib BakharevEGKMPST22.bib LiuW21.bib SaboeSSMKCA21.bib > pub.bib  # merging all files
+grep -h "@" pub.bib | awk -F'[{ ,]' '{print $2 }' > cite.txt   # awk all cite keys in cite.txt file
+echo "\\documentclass{article}" >> main.tex
+echo "\\begin{document}" >> main.tex
+echo "\\title{2}" >> main.tex
+echo "\\author{Khandenath Parth Shivdatta, Madhur Jain, Arjit Bhamu}" >> main.tex
+echo "\maketitle" >> main.tex
+touch cd.txt
+a=0
+while [ $a -lt 12 ]              # creating tex file for bibligraphy
+do
+   k=$(grep -m1 "" cite.txt)
+   echo "Random citation \cite{$k} embeddeed in text." >> main.tex
+   awk 'NR>1' cite.txt > cd.txt
+   cat cd.txt > cite.txt
+   a=`expr $a + 1`
+done
+n=$(grep -c ^ tem.txt)
+if [ $n == 0 ]
+then
+cat styles.txt > tem.txt
+else
+   echo "okay fine "
+fi
+q=$(shuf -n 1 tem.txt)             # random style pick through this command
+sed '/$q/d' tem.txt > tem2.txt
+cat tem2.txt > tem.txt
+echo "\\newpage" >> main.tex
+echo "\\bibliography{pub.bib}" >> main.tex
+echo "\\bibliographystyle{$q}" >> main.tex
+echo "\\end{document}" >> main.tex
+latex main.tex
+bibtex main
+latex main.tex
+latex main.tex     # compile the code in latex and show pdf
+pdflatex main.tex
+zathura main.pdf
+}
+~~~
+
+![image](/assets/images/bib.png)
+
+
+In this script first we merge all files in a pub.bib file then after we awk the cite key from all files through grep -h "@" pub.bib | awk -F'[{ ,]' '{print $2 }' > cite.txt. Then after we grep random style from a file styles.txt . When we run the code show bibliography with different style
+
+At last we make a pdf of Latex tex file and show it.

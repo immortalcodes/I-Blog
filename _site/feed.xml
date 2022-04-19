@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2021-12-25T18:05:21+05:30</updated><id>http://localhost:4000/feed.xml</id><title type="html">Mighty Maniacs</title><subtitle>Make it Work</subtitle><entry><title type="html">Bibligraphy in Latex</title><link href="http://localhost:4000/jekyll/update/2021/12/13/Bib.html" rel="alternate" type="text/html" title="Bibligraphy in Latex" /><published>2021-12-13T14:59:14+05:30</published><updated>2021-12-13T14:59:14+05:30</updated><id>http://localhost:4000/jekyll/update/2021/12/13/Bib</id><content type="html" xml:base="http://localhost:4000/jekyll/update/2021/12/13/Bib.html">&lt;h1 id=&quot;question&quot;&gt;Question:&lt;/h1&gt;
+&lt;ul&gt;
+  &lt;li&gt;Download at least 10 bibliography from distinct authors and distinct conferences.&lt;/li&gt;
+  &lt;li&gt;Write a shell script to merge all files into a single file pub.bib.&lt;/li&gt;
+  &lt;li&gt;Now write a shell/awk script to generate LATEX article that would cite all 10 entries in pub.bib in the main LATEX file So the awk script should extract only the keys and use then in the \cite command inside the source .tex file.&lt;/li&gt;
+  &lt;li&gt;While generating the LATEX file, the script should pick one of the bibliography styles randomly from a list and a generate differently styled bibliography every time it is run.
+    &lt;h2 id=&quot;solution&quot;&gt;Solution&lt;/h2&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Here is the bash script:&lt;/p&gt;
+&lt;div class=&quot;language-console highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;go&quot;&gt;{
+&lt;/span&gt;&lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;/bin/basih
+&lt;span class=&quot;gp&quot;&gt;touch pub.bib    #&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;pub,bib file &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;merge all files
+&lt;span class=&quot;go&quot;&gt;touch main.tex
+&lt;/span&gt;&lt;span class=&quot;gp&quot;&gt;echo -n &quot;&quot; &amp;gt;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;main.tex   &lt;span class=&quot;c&quot;&gt;# create maint.tex file&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;rm main.aux
+rm main.bbl
+&lt;/span&gt;&lt;span class=&quot;gp&quot;&gt;rm main.blg     #&lt;/span&gt;remove all file crete during run the script
+&lt;span class=&quot;go&quot;&gt;rm main.log
+rm main.pdf
+rm main.synctex.gz
+&lt;/span&gt;&lt;span class=&quot;gp&quot;&gt;cat 1999.bib CummingsLZ22.bib MonchABIFZH21.bib abs-2104-01231.bib Gold-Veerkamp21.bib Perez-DiezPLSI21.bib AlsaeediW21.bib GalliPZVVGOHM21.bib AlsaeediW21.bib BakharevEGKMPST22.bib LiuW21.bib SaboeSSMKCA21.bib &amp;gt;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;pub.bib  &lt;span class=&quot;c&quot;&gt;# merging all files&lt;/span&gt;
+&lt;span class=&quot;gp&quot;&gt;grep -h &quot;@&quot; pub.bib | awk -F'[{ ,]' '{print $&lt;/span&gt;2 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;' &amp;gt; cite.txt   # awk all cite keys in cite.txt file
+&lt;/span&gt;&lt;span class=&quot;gp&quot;&gt;echo &quot;\\documentclass{article}&quot; &amp;gt;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;gt; main.tex
+&lt;/span&gt;&lt;span class=&quot;gp&quot;&gt;echo &quot;\\begin{document}&quot; &amp;gt;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;gt; main.tex
+&lt;/span&gt;&lt;span class=&quot;gp&quot;&gt;echo &quot;\\title{2}&quot; &amp;gt;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;gt; main.tex
+&lt;/span&gt;&lt;span class=&quot;gp&quot;&gt;echo &quot;\\author{Khandenath Parth Shivdatta, Madhur Jain, Arjit Bhamu}&quot; &amp;gt;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;gt; main.tex
+&lt;/span&gt;&lt;span class=&quot;gp&quot;&gt;echo &quot;\maketitle&quot; &amp;gt;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;gt; main.tex
+&lt;/span&gt;&lt;span class=&quot;go&quot;&gt;touch cd.txt
+a=0
+&lt;/span&gt;&lt;span class=&quot;gp&quot;&gt;while [ $&lt;/span&gt;a &lt;span class=&quot;nt&quot;&gt;-lt&lt;/span&gt; 12 &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;              &lt;span class=&quot;c&quot;&gt;# creating tex file for bibligraphy&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;do
+&lt;/span&gt;&lt;span class=&quot;gp&quot;&gt;   k=$&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;grep&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-m1&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&quot;&lt;/span&gt; cite.txt&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;gp&quot;&gt;   echo &quot;Random citation \cite{$&lt;/span&gt;k&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; embeddeed &lt;span class=&quot;k&quot;&gt;in &lt;/span&gt;text.&lt;span class=&quot;s2&quot;&gt;&quot; &amp;gt;&amp;gt; main.tex
+&lt;/span&gt;&lt;span class=&quot;gp&quot;&gt;   awk 'NR&amp;gt;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;1' cite.txt &amp;gt; cd.txt
+&lt;/span&gt;&lt;span class=&quot;gp&quot;&gt;   cat cd.txt &amp;gt;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;cite.txt
+&lt;/span&gt;&lt;span class=&quot;gp&quot;&gt;   a=`expr $&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;a + 1&lt;/span&gt;&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;done
+&lt;/span&gt;&lt;span class=&quot;gp&quot;&gt;n=$&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;grep&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; ^ tem.txt&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;gp&quot;&gt;if [ $&lt;/span&gt;n &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; 0 &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt;then
+&lt;/span&gt;&lt;span class=&quot;gp&quot;&gt;cat styles.txt &amp;gt;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;tem.txt
+&lt;span class=&quot;go&quot;&gt;else
+   echo &quot;okay fine &quot;
+fi
+&lt;/span&gt;&lt;span class=&quot;gp&quot;&gt;q=$&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;shuf&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-n&lt;/span&gt; 1 tem.txt&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;             &lt;span class=&quot;c&quot;&gt;# random style pick through this command&lt;/span&gt;
+&lt;span class=&quot;gp&quot;&gt;sed '/$&lt;/span&gt;q/d&lt;span class=&quot;s1&quot;&gt;' tem.txt &amp;gt; tem2.txt
+&lt;/span&gt;&lt;span class=&quot;gp&quot;&gt;cat tem2.txt &amp;gt;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;tem.txt
+&lt;/span&gt;&lt;span class=&quot;gp&quot;&gt;echo &quot;\\newpage&quot; &amp;gt;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;gt; main.tex
+&lt;/span&gt;&lt;span class=&quot;gp&quot;&gt;echo &quot;\\bibliography{pub.bib}&quot; &amp;gt;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;gt; main.tex
+&lt;/span&gt;&lt;span class=&quot;gp&quot;&gt;echo &quot;\\bibliographystyle{$&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;q}&quot; &amp;gt;&amp;gt; main.tex
+&lt;/span&gt;&lt;span class=&quot;gp&quot;&gt;echo &quot;\\end{document}&quot; &amp;gt;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;gt; main.tex
+&lt;/span&gt;&lt;span class=&quot;go&quot;&gt;latex main.tex
+bibtex main
+latex main.tex
+&lt;/span&gt;&lt;span class=&quot;gp&quot;&gt;latex main.tex     #&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;compile the code &lt;span class=&quot;k&quot;&gt;in &lt;/span&gt;latex and show pdf
+&lt;span class=&quot;go&quot;&gt;pdflatex main.tex
+zathura main.pdf
+}
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/bib.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;In this script first we merge all files in a pub.bib file then after we awk the cite key from all files through grep -h “@” pub.bib&lt;/td&gt;
+      &lt;td&gt;awk -F’[{ ,]’ ‘{print $2 }’ &amp;gt; cite.txt. Then after we grep random style from a file styles.txt . When we run the code show bibliography with different style&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;At last we make a pdf of Latex tex file and show it.&lt;/p&gt;</content><author><name></name></author><category term="jekyll" /><category term="update" /><summary type="html"></summary></entry><entry><title type="html">Low-Battery Warning</title><link href="http://localhost:4000/jekyll/update/2021/12/13/Low-b.html" rel="alternate" type="text/html" title="Low-Battery Warning" /><published>2021-12-13T14:59:14+05:30</published><updated>2021-12-13T14:59:14+05:30</updated><id>http://localhost:4000/jekyll/update/2021/12/13/Low-b</id><content type="html" xml:base="http://localhost:4000/jekyll/update/2021/12/13/Low-b.html">&lt;h1 id=&quot;question&quot;&gt;Question:&lt;/h1&gt;
+&lt;p&gt;I3 has no native support for low battery warning. Your task is&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Write a script for i3 that&lt;/li&gt;
+  &lt;li&gt;Warns the user with a message when the battery power goes below 7%.&lt;/li&gt;
+  &lt;li&gt;Discuss the relevant part of the i3config file.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;solution&quot;&gt;Solution&lt;/h2&gt;
+
+&lt;p&gt;Here is the bash script:&lt;/p&gt;
+
+&lt;div class=&quot;language-console highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;#&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;/bin/bash
+&lt;span class=&quot;go&quot;&gt;file=&quot;/sys/class/power_supply/BAT0&quot;
+&lt;/span&gt;&lt;span class=&quot;gp&quot;&gt;cap=$&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cat&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$file&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;/capacity&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;gp&quot;&gt;while [[ $&lt;/span&gt;cap &lt;span class=&quot;nt&quot;&gt;-ge&lt;/span&gt; 7 &lt;span class=&quot;o&quot;&gt;]]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt; do
+&lt;/span&gt;&lt;span class=&quot;gp&quot;&gt; cap=$&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cat&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$file&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;/capacity&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;go&quot;&gt; done
+&lt;/span&gt;&lt;span class=&quot;gp&quot;&gt;if [[ $&lt;/span&gt;cap &lt;span class=&quot;nt&quot;&gt;-le&lt;/span&gt; 7 &lt;span class=&quot;o&quot;&gt;]]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then&lt;/span&gt;
+&lt;span class=&quot;gp&quot;&gt;     notify-send \
+    &quot;Low Battery&quot; \
+    &quot;Your battery is $&lt;/span&gt;cap that is  below 7% &lt;span class=&quot;s2&quot;&gt;&quot; 
+&lt;/span&gt;&lt;span class=&quot;go&quot;&gt;fi
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;This script takes the information and update the status of battery till it reaches at the conclusion that it is less than 7% and gives the notification.
+&lt;img src=&quot;/assets/images/battery.jpg&quot; alt=&quot;image&quot; /&gt;
+Here is the relevant part of config file:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;#checking low battery levels
+#the script will run from the startup and keep running , as soon as battery is below 7% it will show the warning&lt;/p&gt;
+  &lt;blockquote&gt;
+    &lt;p&gt;exec_always bash ~/Documents/CS100/a5/q10/q10.sh&lt;/p&gt;
+  &lt;/blockquote&gt;
+&lt;/blockquote&gt;</content><author><name></name></author><category term="jekyll" /><category term="update" /><summary type="html"></summary></entry><entry><title type="html">Emedding animated GIFs in pdf using LaTeX</title><link href="http://localhost:4000/jekyll/update/2021/12/13/animation.html" rel="alternate" type="text/html" title="Emedding animated GIFs in pdf using LaTeX" /><published>2021-12-13T14:59:14+05:30</published><updated>2021-12-13T14:59:14+05:30</updated><id>http://localhost:4000/jekyll/update/2021/12/13/animation</id><content type="html" xml:base="http://localhost:4000/jekyll/update/2021/12/13/animation.html">&lt;h1 id=&quot;question&quot;&gt;Question:&lt;/h1&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Download a random animated GIF from internet&lt;/li&gt;
+  &lt;li&gt;Use necessary packages in LaTeX&lt;/li&gt;
+  &lt;li&gt;Make a single slide presentation that renders the animated GIF&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;solution&quot;&gt;Solution&lt;/h2&gt;
+
+&lt;p&gt;To embed an animated GIF in a beamer presentation, we first need to break the GIF into a sequence of several images(.png files). The command to be used is&lt;/p&gt;
+
+&lt;p&gt;sh
+convert -coalesce GIFname.gif correspondingimagesname.png&lt;/p&gt;
+
+&lt;p&gt;Then all the images have to be animated using the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;\usepackage{animate}&lt;/code&gt; and the command &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;\animategraphics&lt;/code&gt; in the following way :-&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;\documentclass{beamer}\usetheme{Boadilla}
+\usepackage{animate}%package for animating
+\begin{document}
+    \begin{frame}
+        \title{4\\Inserting GIFs in Beamer}
+        \author{Khandenath Parth Shivdatta, Madhur Jain, Arjit Bhamu}
+	    \maketitle
+	    \centering  %to keep the GIF at center
+	    \animategraphics[width=7 cm,loop]{20}{KeHa-}{0}{78} 
+    \end{frame}
+\end{document}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/ani.jpeg&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;In the above command of \animategraphics :&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;loop makes the GIF keep restarting and stay in in a loop&lt;/li&gt;
+  &lt;li&gt;width sets the width for the GIF&lt;/li&gt;
+  &lt;li&gt;framerate of GIF=20ms&lt;/li&gt;
+  &lt;li&gt;KeHa is the common part in names of all images and the {0}and{78}ensures that all images, right from KeHa-0 to KeHa-78 are included in the GIF&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;frames-appear-in-following-way&quot;&gt;Frames appear in following way:&lt;/h3&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Frames&lt;/th&gt;
+      &lt;th&gt;20&lt;/th&gt;
+      &lt;th&gt;40&lt;/th&gt;
+      &lt;th&gt;60&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Second&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;3&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;</content><author><name></name></author><category term="jekyll" /><category term="update" /><summary type="html"></summary></entry></feed>

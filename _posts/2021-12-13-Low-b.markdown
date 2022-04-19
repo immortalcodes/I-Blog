@@ -1,0 +1,47 @@
+---
+layout: posts
+title:  "Low-Battery Warning"
+date:   2021-12-13 14:59:14 +0530
+categories: jekyll update
+excerpt: " "
+header:
+  overlay_image: /assets/images/code.jpg
+  overlay_filter: rgba(255, 0, 0, 0.5)
+---
+# Question:
+I3 has no native support for low battery warning. Your task is
+- Write a script for i3 that
+- Warns the user with a message when the battery power goes below 7%. 
+- Discuss the relevant part of the i3config file.
+
+## Solution
+
+Here is the bash script:
+
+~~~console
+#!/bin/bash
+file="/sys/class/power_supply/BAT0"
+cap=$(cat "$file/capacity")
+while [[ $cap -ge 7 ]];
+ do
+ cap=$(cat "$file/capacity")
+ done
+if [[ $cap -le 7 ]]; then
+     notify-send \
+    "Low Battery" \
+    "Your battery is $cap that is  below 7% " 
+fi
+~~~
+
+
+This script takes the information and update the status of battery till it reaches at the conclusion that it is less than 7% and gives the notification.
+![image](/assets/images/battery.jpg)
+Here is the relevant part of config file:
+
+>#checking low battery levels
+>#the script will run from the startup and keep running , as soon as battery is below 7% it will show the warning
+>>exec_always bash ~/Documents/CS100/a5/q10/q10.sh
+
+ 
+
+
